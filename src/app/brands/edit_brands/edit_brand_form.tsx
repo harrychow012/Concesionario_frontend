@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { useForm } from "react-hook-form";
-import { BrandData } from '../../../interface/brand.interface'; 
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import { BrandData } from '../../../interface/brand.interface';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { getBrandById, updateBrand } from '../brands.api';
@@ -20,32 +20,32 @@ export function EditBrandForm({ brandId }: EditBrandFormProps) {
   useEffect(() => {
     async function fetchBrand() {
       const brand = await getBrandById(brandId);
-      setValue("name", brand.name);
-      setValue("description", brand.description);
+      setValue('name', brand.name);
+      setValue('description', brand.description);
     }
     fetchBrand();
   }, [brandId, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     await updateBrand(brandId, data);
-    router.push("/");
+    router.push('/');
   });
 
   return (
     <form onSubmit={onSubmit}>
       <Label>Marca</Label>
-      <Input {...register("name")} />
+      <Input {...register('name')} />
       <Label>Descripcion</Label>
-      <Input {...register("description")} />
-      <div className='mt-6 flex justify-end space-x-3'>
+      <Input {...register('description')} />
+      <div className="mt-6 flex justify-end space-x-3">
+        <Button variant="outline" onClick={() => router.back()}>
+          Cancelar
+        </Button>
         <Button
           type="submit"
           className="bg-green-600 hover:bg-green-700 text-white"
         >
           Editar Marca
-        </Button>
-        <Button variant="outline" onClick={() => router.back()}>
-          Cancelar
         </Button>
       </div>
     </form>
